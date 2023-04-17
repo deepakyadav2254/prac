@@ -67,6 +67,7 @@ function TablePage() {
   const headers = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
   const onTest = (val, shift, day) => {
+    console.log(val);
     if (val && shift && day) {
       someData = someData.map((element) => {
         if (element.name === val) {

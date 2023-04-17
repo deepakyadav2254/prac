@@ -3,11 +3,10 @@ const Dropdown = ({ options, onTest, shift, day }) => {
   const [val, setVal] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {}, []);
-
   const handleOptionClick = (label) => {
-    onTest(val, shift, day);
     setVal(label);
+    setIsOpen(false);
+    onTest(val, shift, day);
   };
 
   const handleClick = () => {
@@ -16,7 +15,9 @@ const Dropdown = ({ options, onTest, shift, day }) => {
 
   const renderedOptions = options?.map((option) => {
     return (
-      <div onClick={() => handleOptionClick(option.label)}>{option.label}</div>
+      <div key={option.label} onClick={() => handleOptionClick(option.label)}>
+        {option.label}
+      </div>
     );
   });
 

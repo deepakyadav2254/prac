@@ -1,14 +1,6 @@
 import { useState } from 'react';
 import Dropdown from './Dropdown';
-function Table({
-  data,
-  headers,
-  children,
-  firstHeader,
-  lastHeader,
-  options,
-  onTest,
-}) {
+function Table({ data, headers, firstHeader, lastHeader, options, onTest }) {
   const renderedRows = data.map((shift) => {
     let total = 0;
     return (
@@ -39,9 +31,9 @@ function Table({
     return <td key={index}>{header}</td>;
   });
   return (
-    <table className='table-auto border-spacing-2'>
+    <table>
       <tbody>
-        <tr className='border-b-2'>
+        <tr>
           <td>{firstHeader}</td>
           {renderedHeaders}
           <td>{lastHeader}</td>
