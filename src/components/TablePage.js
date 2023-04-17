@@ -2,9 +2,48 @@ import Table from '../components/Table';
 import Dropdown from './Dropdown';
 import { useState } from 'react';
 
+let someData = [
+  {
+    name: 'X1',
+    days: { Monday: 0, Tuesday: 0, Wednesday: 0, Thursday: 0, Friday: 0 },
+    shiftType: [],
+  },
+  {
+    name: 'X2',
+    days: { Monday: 0, Tuesday: 0, Wednesday: 0, Thursday: 0, Friday: 0 },
+    shiftType: [],
+  },
+  {
+    name: 'X3',
+    days: { Monday: 0, Tuesday: 0, Wednesday: 0, Thursday: 0, Friday: 0 },
+    shiftType: [],
+  },
+  {
+    name: 'X4',
+    days: { Monday: 0, Tuesday: 0, Wednesday: 0, Thursday: 0, Friday: 0 },
+    shiftType: [],
+  },
+  {
+    name: 'X5',
+    days: { Monday: 0, Tuesday: 0, Wednesday: 0, Thursday: 0, Friday: 0 },
+    shiftType: [],
+  },
+  {
+    name: 'X6',
+    days: { Monday: 0, Tuesday: 0, Wednesday: 0, Thursday: 0, Friday: 0 },
+    shiftType: [],
+  },
+  {
+    name: 'X7',
+    days: { Monday: 0, Tuesday: 0, Wednesday: 0, Thursday: 0, Friday: 0 },
+    shiftType: [],
+  },
+];
+
 function TablePage() {
+  const [staffData, setStaffData] = useState(someData);
   const options = [
-    { label: 'X1', value: 'x1', days: [] },
+    { label: 'X1', value: 'x1' },
     { label: 'X2', value: 'x2' },
     { label: 'X3', value: 'x3' },
     { label: 'X4', value: 'x4' },
@@ -27,51 +66,32 @@ function TablePage() {
 
   const headers = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
-  const dataLoad = [
-    {
-      name: 'X1',
-      days: { monday: 0, tuesday: 0, wednesday: 0, thursday: 0, friday: 0 },
-    },
-    {
-      name: 'X2',
-      days: { monday: 0, tuesday: 0, wednesday: 0, thursday: 0, friday: 0 },
-    },
-    {
-      name: 'X3',
-      days: { monday: 0, tuesday: 0, wednesday: 0, thursday: 0, friday: 0 },
-    },
-    {
-      name: 'X4',
-      days: { monday: 0, tuesday: 0, wednesday: 0, thursday: 0, friday: 0 },
-    },
-    {
-      name: 'X5',
-      days: { monday: 0, tuesday: 0, wednesday: 0, thursday: 0, friday: 0 },
-    },
-    {
-      name: 'X6',
-      days: { monday: 0, tuesday: 0, wednesday: 0, thursday: 0, friday: 0 },
-    },
-    {
-      name: 'X7',
-      days: { monday: 0, tuesday: 0, wednesday: 0, thursday: 0, friday: 0 },
-    },
-  ];
+  const onTest = (val, shift, day) => {
+    if (val && shift && day) {
+      someData = someData.map((element) => {
+        if (element.name === val) {
+          element.shiftType.push(shift);
+          element.days[day] = element.days[day] + 1;
+          return element;
+        }
+        return element;
+      });
 
-  const [staffData, setStaffData] = useState(dataLoad);
-
-  const onTest = (info) => {
-    console.log(info);
+      setStaffData([...someData]);
+    }
   };
 
   return (
     <div>
-      <Table data={data} headers={headers}>
-        <Dropdown options={options} />
-      </Table>
+      <Table
+        data={data}
+        headers={headers}
+        options={options}
+        onTest={onTest}
+      ></Table>
       <br />
       <Table
-        data={dataLoad}
+        data={someData}
         headers={headers}
         firstHeader={'Staff Member'}
         lastHeader={'Totals'}

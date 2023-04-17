@@ -1,54 +1,29 @@
-import { useState, useRef, useEffect } from 'react';
-
-const Dropdown = ({ options, onTest }) => {
-  const [value, setValue] = useState(null);
-
-  const divEl = useRef();
+import { useState, useEffect } from 'react';
+const Dropdown = ({ options, onTest, shift, day }) => {
+  const [val, setVal] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    const handler = (event) => {
-      if (!divEl.current) {
-        return;
-      }
+  useEffect(() => {}, []);
 
-      if (!divEl.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('click', handler, true);
-
-    return () => {
-      document.removeEventListener('click', handler);
-    };
-  }, []);
+  const handleOptionClick = (label) => {
+    onTest(val, shift, day);
+    setVal(label);
+  };
 
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
-  const handleOptionClick = (event, option) => {
-    console.log(event.target);
-    setIsOpen(false);
-    setValue(option);
-  };
 
-  const renderedOptions = options.map((option) => {
+  const renderedOptions = options?.map((option) => {
     return (
-      <div
-        className='hover:bg-sky-100 rounded cursor-pointer p-1'
-        onClick={(event) => handleOptionClick(event, option)}
-        key={option.value}
-      >
-        {option.label}
-      </div>
+      <div onClick={() => handleOptionClick(option.label)}>{option.label}</div>
     );
   });
 
   return (
-    <div ref={divEl} onClick={handleClick}>
-      <div>{value?.label || 'X'}</div>
-      <div>{isOpen && renderedOptions}</div>
+    <div onClick={handleClick}>
+      {val || 'X'}
+      {isOpen && renderedOptions}
     </div>
   );
 };

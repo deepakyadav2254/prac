@@ -1,31 +1,54 @@
 import { useState } from 'react';
-
-function Table({ data, headers, children, firstHeader, lastHeader }) {
-  const renderedRows = data.map((day) => {
+import Dropdown from './Dropdown';
+function Table({
+  data,
+  headers,
+  children,
+  firstHeader,
+  lastHeader,
+  options,
+  onTest,
+}) {
+  const renderedRows = data.map((shift) => {
+    let total = 0;
     return (
-      <tr className='border-b' key={day.name}>
-        <td className='p-3'>{day.name}</td>
+      <tr className='border-b' key={shift.name}>
+        <td className='p-3'>{shift.name}</td>
 
         {headers.map((el, index) => {
-          return <td key={index}>{children}</td>;
+          return (
+            <td key={index}>
+              {options ? (
+                <Dropdown
+                  options={options}
+                  shift={shift.name}
+                  day={el}
+                  onTest={onTest}
+                />
+              ) : (
+                <div>{shift.days[el]}</div>
+              )}
+            </td>
+          );
         })}
       </tr>
     );
   });
 
   const renderedHeaders = headers.map((header, index) => {
-    return <th key={index}>{header}</th>;
+    return <td key={index}>{header}</td>;
   });
   return (
     <table className='table-auto border-spacing-2'>
-      <thead>
+      <tbody>
         <tr className='border-b-2'>
-          <th>{firstHeader}</th>
+          <td>{firstHeader}</td>
           {renderedHeaders}
-          <th>{lastHeader}</th>
+          <td>{lastHeader}</td>
         </tr>
-      </thead>
-      <tbody>{renderedRows}</tbody>
+
+        {renderedRows}
+      </tbody>
     </table>
   );
 }
