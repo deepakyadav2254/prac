@@ -1,44 +1,54 @@
-import { useState } from 'react';
-import Dropdown from './Dropdown';
+import Select from './Select';
+
 function Table({ data, headers, firstHeader, lastHeader, options, onTest }) {
   const renderedRows = data.map((shift) => {
-    let total = 0;
     return (
       <tr className='border-b' key={shift.name}>
         <td className='p-3'>{shift.name}</td>
 
-        {headers.map((el, index) => {
+        {headers.map((header, index) => {
           return (
             <td key={index}>
               {options ? (
-                <Dropdown
-                  options={options}
-                  shift={shift.name}
-                  day={el}
-                  onTest={onTest}
-                />
+                <Select shift={shift.name} day={header} onTest={onTest} />
               ) : (
-                <div>{shift.days[el]}</div>
+                <div>{shift.days[header]}</div>
               )}
             </td>
           );
         })}
+        <td>{shift.totals}</td>
       </tr>
     );
   });
 
+  // const renderedRows = data.map((shift) => {
+  //   return (
+  //     <tr className='border-b' key={shift.name}>
+  //       <td className='p-3'>{shift.name}</td>
+
+  //       {headers.map((el, index) => {
+  //         return (
+  //           <td key={el}>
+  //             <Input shift={shift.name} day={el} onTest={onTest} />
+  //           </td>
+  //         );
+  //       })}
+  //     </tr>
+  //   );
+  // });
+
   const renderedHeaders = headers.map((header, index) => {
-    return <td key={index}>{header}</td>;
+    return <th key={index}>{header}</th>;
   });
   return (
     <table>
       <tbody>
         <tr>
-          <td>{firstHeader}</td>
+          <th>{firstHeader}</th>
           {renderedHeaders}
-          <td>{lastHeader}</td>
+          <th>{lastHeader}</th>
         </tr>
-
         {renderedRows}
       </tbody>
     </table>
