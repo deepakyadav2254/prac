@@ -1,21 +1,29 @@
 import { useState } from 'react';
-const Input = ({ onTest, shift, day }) => {
+const Input = ({ onTest, shift, day, onPopulate }) => {
   const [val, setVal] = useState('X');
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
     onTest(val, shift, day);
   };
+
+  const resetState = () => {
+    setVal('X');
+  };
   const handleOnChange = (event) => {
     let value = event.target.value;
     setVal(value);
-    onTest(value, shift, day);
+    onTest(value, shift, day, resetState);
+  };
+
+  const populateEmpty = () => {
+    console.log('populate is app ');
   };
 
   return (
     <form onSubmit={handleOnSubmit}>
-      <select onChange={handleOnChange} defaultValue={val}>
-        <option value={val}>X</option>
+      <select onChange={handleOnChange} value={val}>
+        <option value='X'>X</option>
         <option value='X1'>X1</option>
         <option value='X2'>X2</option>
         <option value='X3'>X3</option>

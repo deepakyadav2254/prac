@@ -1,6 +1,14 @@
 import Select from './Select';
 
-function Table({ data, headers, firstHeader, lastHeader, options, onTest }) {
+function Table({
+  data,
+  headers,
+  firstHeader,
+  lastHeader,
+  options,
+  onTest,
+  onPopulate,
+}) {
   const renderedRows = data.map((shift) => {
     return (
       <tr className='border-b' key={shift.name}>
@@ -10,7 +18,12 @@ function Table({ data, headers, firstHeader, lastHeader, options, onTest }) {
           return (
             <td key={index}>
               {options ? (
-                <Select shift={shift.name} day={header} onTest={onTest} />
+                <Select
+                  shift={shift.name}
+                  day={header}
+                  onTest={onTest}
+                  onPopulate={onPopulate}
+                />
               ) : (
                 <div>{shift.days[header]}</div>
               )}
